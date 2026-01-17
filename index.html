@@ -17,98 +17,77 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
 
+        /* ===== REVEAL ON SCROLL ===== */
         const reveals = document.querySelectorAll(".reveal");
-
-        const observer = new IntersectionObserver(entries => {
+        const revealObserver = new IntersectionObserver(entries => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
-                    entry.target.style.transitionDelay = `${index * 0.2}s`;
+                    entry.target.style.transitionDelay = `${index * 0.15}s`;
                     entry.target.classList.add("active");
                 }
             });
-        }, {
-            threshold: 0.15
-        });
+        }, { threshold: 0.15 });
 
-        reveals.forEach(reveal => observer.observe(reveal));
+        reveals.forEach(el => revealObserver.observe(el));
 
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
 
-        const navbar = document.querySelector(".reveal-navbar");
+        /* ===== MOBILE MENU ===== */
+        const menuOpenBtn = document.getElementById("menu-open-button");
+        const menuCloseBtn = document.getElementById("menu-close-button");
 
-        if (!navbar) return;
-
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("active");
-                }
+        if (menuOpenBtn && menuCloseBtn) {
+            menuOpenBtn.addEventListener("click", () => {
+                document.body.classList.add("show-mobile-menu");
             });
-        }, {
-            threshold: 0
-        });
 
-        observer.observe(navbar);
-
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const text = "Welcome to our coffee paradise, where every bean tells a story and every cup sparks joy .";
-
-        const typingElement = document.getElementById("typing");
-
-        let index = 0;
-        let isDeleting = false;
-
-        function typeEffect() {
-            if (!isDeleting && index <= text.length) {
-                typingElement.textContent = text.substring(0, index);
-                index++;
-                setTimeout(typeEffect, 100); // سرعة الكتابة
-            }
-            else if (isDeleting && index >= 0) {
-                typingElement.textContent = text.substring(0, index);
-                index--;
-                setTimeout(typeEffect, 70); // سرعة المسح
-            }
-            else if (index > text.length) {
-                setTimeout(() => isDeleting = true, 1500); // توقف قبل المسح
-                setTimeout(typeEffect, 1500);
-            }
-            else if (index < 0) {
-                isDeleting = false;
-                index = 0;
-                setTimeout(typeEffect, 600); // توقف قبل الإعادة
-            }
+            menuCloseBtn.addEventListener("click", () => {
+                document.body.classList.remove("show-mobile-menu");
+            });
         }
 
-        typeEffect();
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
+
+        /* ===== TYPING EFFECT ===== */
+        const text = "Welcome to our coffee paradise, where every bean tells a story and every cup sparks joy.";
+        const typingEl = document.getElementById("typing");
+
+        if (typingEl) {
+            let index = 0;
+            let deleting = false;
+
+            function type() {
+                if (!deleting && index <= text.length) {
+                    typingEl.textContent = text.slice(0, index++);
+                    setTimeout(type, 90);
+                } else if (deleting && index >= 0) {
+                    typingEl.textContent = text.slice(0, index--);
+                    setTimeout(type, 60);
+                } else if (index > text.length) {
+                    deleting = true;
+                    setTimeout(type, 1200);
+                } else {
+                    deleting = false;
+                    index = 0;
+                    setTimeout(type, 500);
+                }
+            }
+            type();
+        }
+
+
+        /* ===== SCROLL TO TOP ===== */
         const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-        if (!scrollTopBtn) return;
-
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 300) {
-                scrollTopBtn.style.display = "flex";
-            } else {
-                scrollTopBtn.style.display = "none";
-            }
-        });
-
-        scrollTopBtn.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
+        if (scrollTopBtn) {
+            window.addEventListener("scroll", () => {
+                scrollTopBtn.style.display =
+                    window.scrollY > 300 ? "flex" : "none";
             });
-        });
+
+            scrollTopBtn.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        }
+
     });
 </script>
 
