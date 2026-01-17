@@ -161,6 +161,32 @@ header .navbar {
     display: none;
 }
 
+#scrollTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+#scrollTopBtn:hover {
+    transform: translateY(-5px);
+    background: var(--medium-gray-color);
+}
+
+
 /* Hero section styling */
 .hero-section {
     min-height: 100vh;

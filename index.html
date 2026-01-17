@@ -55,6 +55,64 @@
 
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const text = "Welcome to our coffee paradise, where every bean tells a story and every cup sparks joy .";
+
+        const typingElement = document.getElementById("typing");
+
+        let index = 0;
+        let isDeleting = false;
+
+        function typeEffect() {
+            if (!isDeleting && index <= text.length) {
+                typingElement.textContent = text.substring(0, index);
+                index++;
+                setTimeout(typeEffect, 100); // سرعة الكتابة
+            }
+            else if (isDeleting && index >= 0) {
+                typingElement.textContent = text.substring(0, index);
+                index--;
+                setTimeout(typeEffect, 70); // سرعة المسح
+            }
+            else if (index > text.length) {
+                setTimeout(() => isDeleting = true, 1500); // توقف قبل المسح
+                setTimeout(typeEffect, 1500);
+            }
+            else if (index < 0) {
+                isDeleting = false;
+                index = 0;
+                setTimeout(typeEffect, 600); // توقف قبل الإعادة
+            }
+        }
+
+        typeEffect();
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+        if (!scrollTopBtn) return;
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.style.display = "flex";
+            } else {
+                scrollTopBtn.style.display = "none";
+            }
+        });
+
+        scrollTopBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    });
+</script>
+
+<script src="script.js"></script>
 
 <body>
     <!-- Header / navbar -->
@@ -90,6 +148,7 @@
             <button id="menu-open-button" class="fas fa-bars"></button>
         </nav>
     </header>
+
     <main>
         <!-- Hero Section -->
         <section class="hero-section" id="home">
@@ -99,8 +158,7 @@
                     <h3 class="subtitle">
                         Make your day great with our special coffe!
                     </h3>
-                    <p class="description">Welcome to our coffee paradise, where every bean tells a story and every cup
-                        sparks joy.</p>
+                    <p class="description"><span id="typing"></span></p>
                     <div class="buttons">
                         <a href="#menu" class="button order-now">Order Now</a>
                         <a href="#contact" class="button contact-us">Contact Us</a>
@@ -140,6 +198,10 @@
                     </div>
                 </div>
             </div>
+            <button id="scrollTopBtn">
+                <i class="fa-solid fa-arrow-up"></i>
+            </button>
+
         </section>
         <!-- Menu Section -->
         <section class="menu-section" id="menu">
@@ -371,8 +433,9 @@
                 </p>
             </div>
         </footer>
+
     </main>
-    <script src="script.js"></script>
+
 </body>
 
 </html>
