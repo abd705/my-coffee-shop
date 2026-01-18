@@ -88,6 +88,27 @@
             });
         }
 
+
+        /* ===== FAQ TOGGLE (✔ الحل) ===== */
+        const questions = document.querySelectorAll(".faq .q");
+
+        questions.forEach(q => {
+            q.addEventListener("click", () => {
+                const answer = q.nextElementSibling;
+                const arrow = q.querySelector(".arrow");
+
+                document.querySelectorAll(".a").forEach(a => {
+                    if (a !== answer) a.classList.remove("a-opened");
+                });
+                document.querySelectorAll(".arrow").forEach(ar => {
+                    if (ar !== arrow) ar.classList.remove("arrow-rotated");
+                });
+
+                answer.classList.toggle("a-opened");
+                arrow.classList.toggle("arrow-rotated");
+            });
+        });
+
     });
 </script>
 
